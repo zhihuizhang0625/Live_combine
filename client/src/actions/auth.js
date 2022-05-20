@@ -11,14 +11,14 @@ import {
   
   export const register = (username, email, password,firstname, lastname,birthday) => (dispatch) => {
     return AuthApi.register(username, email, password,firstname, lastname,birthday).then(
-      (response) => {
+      (data) => {
         dispatch({
           type: REGISTER_SUCCESS,
         });
   
         dispatch({
-          type: SET_MESSAGE,
-          payload: response.data.message,
+          type: LOGIN_SUCCESS,
+          payload: { user: data },
         });
   
         return Promise.resolve();

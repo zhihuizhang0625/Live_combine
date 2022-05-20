@@ -115,6 +115,8 @@ class Register extends Component {
 
     this.form.validateAll();
 
+    const { dispatch, history } = this.props;
+
     if (this.checkBtn.context._errors.length === 0) {
       this.props
         .dispatch(
@@ -129,6 +131,8 @@ class Register extends Component {
           this.setState({
             successful: true,
           });
+          history.push("/");
+          window.location.reload();
         })
         .catch(() => {
           this.setState({
@@ -256,9 +260,11 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
   const { message } = state.message;
   return {
-    message,
+    isLoggedIn,
+    message
   };
 }
 
