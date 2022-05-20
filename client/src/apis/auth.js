@@ -19,11 +19,14 @@ class AuthApi {
     localStorage.removeItem("user");
   }
 
-  register(username, email, password) {
+  register(username, email, password,firstname, lastname,birthday) {
     return axios.post(API_URL + "signup", {
       username,
       email,
       password,
+      firstname,
+      lastname,
+      birthday
     });
   }
 }

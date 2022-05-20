@@ -70,11 +70,11 @@ class UserAuth extends Component {
                   </Link>
                 </li>
 
-                {/* <li className="nav-item">
+                <li className="nav-item">
                   <Link to={"/register"} className="nav-link">
                     Sign Up
                   </Link>
-                </li> */}
+                </li>
               </div>
             )}
         </div>

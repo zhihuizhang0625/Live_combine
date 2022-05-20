@@ -9,8 +9,8 @@ import {
   
   import AuthApi from "../apis/auth";
   
-  export const register = (username, email, password) => (dispatch) => {
-    return AuthApi.register(username, email, password).then(
+  export const register = (username, email, password,firstname, lastname,birthday) => (dispatch) => {
+    return AuthApi.register(username, email, password,firstname, lastname,birthday).then(
       (response) => {
         dispatch({
           type: REGISTER_SUCCESS,
