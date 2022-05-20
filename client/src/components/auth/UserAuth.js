@@ -57,7 +57,7 @@ class UserAuth extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a href="/login" className="nav-link" onClick={this.logOut}>
+                  <a href="/signin" className="nav-link" onClick={this.logOut}>
                     LogOut
                   </a>
                 </li>
@@ -65,7 +65,7 @@ class UserAuth extends Component {
             ) : (
               <div className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to={"/login"} className="nav-link">
+                  <Link to={"/signin"} className="nav-link">
                     Login
                   </Link>
                 </li>
@@ -83,8 +83,9 @@ class UserAuth extends Component {
 }
 
 function mapStateToProps(state) {
-  const {  user } = state.myAuth;
+  const { isLoggedIn, user } = state.myAuth;
   return {
+    isLoggedIn,
     user,
   };
 }
