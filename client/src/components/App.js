@@ -8,6 +8,7 @@ import StreamDelete from './streams/StreamDelete'
 import StreamEdit from './streams/streamEdit'
 import history from '../history'
 import 'bootswatch/dist/darkly/bootstrap.min.css'
+import Signin from './auth/Signin';
 
 const App =() =>{
     return (
@@ -17,6 +18,7 @@ const App =() =>{
                 <Header />
                 <Switch>
                 <Route path="/" exact component={StreamList}></Route>
+                <Route path="/signin" exact component={Signin}></Route>
                 <Route path="/streams/new" exact component={StreamCreate}></Route>
                 <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
                 <Route path="/streams/delete/:id" exact component={StreamDelete}></Route>
