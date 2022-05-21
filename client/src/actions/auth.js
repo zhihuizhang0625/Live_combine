@@ -45,6 +45,43 @@ import {
     );
   };
   
+
+  export const businessRegister = (username, email, password,firstname, lastname,businessName,businessWebsite,phoneNumber) => (dispatch) => {
+    return AuthApi.businessRegister(username, email, password,firstname, lastname,businessName,businessWebsite,phoneNumber).then(
+      (data) => {
+        dispatch({
+          type: REGISTER_SUCCESS,
+        });
+  
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: { user: data },
+        });
+  
+        return Promise.resolve();
+      },
+      (error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+  
+        dispatch({
+          type: REGISTER_FAIL,
+        });
+  
+        dispatch({
+          type: SET_MESSAGE,
+          payload: message,
+        });
+  
+        return Promise.reject();
+      }
+    );
+  };
+
   export const login = (username, password) => (dispatch) => {
     return AuthApi.login(username, password).then(
       (data) => {

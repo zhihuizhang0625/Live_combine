@@ -5,7 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
 import { connect } from "react-redux";
-import { register } from "../../actions/auth";
+import { businessRegister } from "../../actions/auth";
 
 const required = (value) => {
   if (!value) {
@@ -47,7 +47,7 @@ const vpassword = (value) => {
   }
 };
 
-class Register extends Component {
+class BusinessRegister extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
@@ -56,7 +56,9 @@ class Register extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeLastName = this.onChangeLastName.bind(this);
-    this.onChangeBirthday = this.onChangeBirthday.bind(this);
+    this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
+    this.onChangeBusinessWebsite = this.onChangeBusinessWebsite.bind(this);
+    this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
 
     this.state = {
       username: "",
@@ -64,7 +66,9 @@ class Register extends Component {
       password: "",
       firstName:"",
       lastName:"",
-      birthday:"",
+      businessName:"",
+      businessWebsite:"",
+      phoneNumber:"",
       successful: false,
     };
   }
@@ -100,11 +104,25 @@ class Register extends Component {
   }
 
   
-  onChangeBirthday(e) {
+  onChangeBusinessName(e) {
     this.setState({
-      birthday: e.target.value,
+      businessName: e.target.value,
     });
   }
+
+  onChangeBusinessWebsite(e) {
+    this.setState({
+      businessWebsite: e.target.value,
+    });
+  }
+
+
+  onChangePhoneNumber(e) {
+    this.setState({
+      phoneNumber: e.target.value,
+    });
+  }
+
 
   handleRegister(e) {
     e.preventDefault();
@@ -120,12 +138,14 @@ class Register extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       this.props
         .dispatch(
-          register(this.state.username, 
+          businessRegister(this.state.username, 
             this.state.email, 
             this.state.password,
             this.state.firstName,
             this.state.lastName,
-            this.state.birthday)
+            this.state.businessName,
+            this.state.businessWebsite,
+            this.state.phoneNumber)
         )
         .then(() => {
           this.setState({
@@ -223,13 +243,36 @@ class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="birthday">Birthday</label>
+                  <label htmlFor="businessName">Company </label>
                   <Input
                     type="text"
                     className="form-control"
-                    name="birthday"
+                    name="businessName"
                     value={this.state.birthday}
-                    onChange={this.onChangeBirthday}
+                    onChange={this.onChangeBusinessName}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="businessWebsite">businessWebSite </label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="businessWebsite"
+                    value={this.state.businessWebSite}
+                    onChange={this.onChangeBusinessWebsite}
+                  />
+                </div>
+
+
+                <div className="form-group">
+                  <label htmlFor="phoneNumber">Contact </label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="phoneNumber"
+                    value={this.state.phoneNumber}
+                    onChange={this.onChangePhoneNumber}
                   />
                 </div>
 
@@ -268,4 +311,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps)(BusinessRegister);

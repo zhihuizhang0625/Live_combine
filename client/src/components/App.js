@@ -10,6 +10,7 @@ import history from '../history'
 import 'bootswatch/dist/darkly/bootstrap.min.css'
 import Signin from './auth/Signin';
 import Register from './auth/Register';
+import BusinessRegister from './auth/BusinessRegister';
 
 const App =() =>{
     return (
@@ -21,6 +22,7 @@ const App =() =>{
                 <Route path="/" exact component={StreamList}></Route>
                 <Route path="/signin" exact component={Signin}></Route>
                 <Route path="/register" exact component={Register}></Route>
+                <Route path="/business/register" exact component={BusinessRegister}></Route>
                 <Route path="/streams/new" exact component={StreamCreate}></Route>
                 <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
                 <Route path="/streams/delete/:id" exact component={StreamDelete}></Route>
