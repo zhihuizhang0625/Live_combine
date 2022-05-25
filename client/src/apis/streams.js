@@ -1,16 +1,20 @@
-// import header from "./header";
+import header from "./header";
 
-// export const getAllRooms = () => {
-//     return header.get("/room/all");
-//   };
+export const getAllStreams = () => {
+    return header.get("/stream/all");
+  };
+
+export const getStream = (id) => {
+    return header.get(`/stream/${id}`);
+  };
 
 
-//   export const createNewRoom = room => {
-//     return header.post("/room/newroom",room);
-//   };
+  export const createNewStream = stream => {
+    return header.post("/stream/newstream",stream);
+  };
 
-import axios from 'axios';
+// import axios from 'axios';
 
-export default axios.create({
-    baseURL:'http://localhost:3001'
-})
+// export default axios.create({
+//     baseURL:'http://localhost:3001'
+// })
