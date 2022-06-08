@@ -7,9 +7,9 @@ import {
 import * as streamsApi from '../apis/streams'
 
 
-export const createStream = (title, description) => async (dispatch,getState) =>{
+export const createStream = (businessId, stream) => async (dispatch,getState) =>{
     // const {userId } = getState().auth
-    const response = await streamsApi.createNewStream({title, description})
+    const response = await streamsApi.createNewStream(businessId, stream)
     dispatch({ type: CREATE_STREAM, payload: response.data})
     history.push('/')
 }
@@ -17,10 +17,18 @@ export const fetchStreams =() => async dispatch =>{
     const response = await streamsApi.getAllStreams();
     dispatch({ type:FETCH_STREAMS, payload: response.data })
 }
+
 export const fetchStream= (id) => async dispatch => {
     const response = await streamsApi.getStream(id)
     dispatch({ type:FETCH_STREAM, payload: response.data})
 }
+
+export const fetchStreambyToken= (token) => async dispatch => {
+    const response = await streamsApi.getStreambyToken(token)
+    dispatch({ type:FETCH_STREAM, payload: response.data})
+}
+
+
 
 // export const createTutorial = (title, description) => async (dispatch) => {
     // try {

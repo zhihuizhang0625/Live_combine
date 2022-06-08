@@ -1,33 +1,11 @@
-
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { createStream } from '../../actions/stream'
-// import StreamForm from './StreamForm'
-
-// class StreamCreate extends React.Component{
-    
-//     onSubmit=(formValues) => {
-//         this.props.createStream(formValues)
-//     }
-//     render(){
-//         return (
-//             <div>
-//                 <h3> create Stream</h3>
-//                 <StreamForm onSubmit={this.onSubmit} />
-//             </div>
-//         )
-//     }
-// }
-
-// export default connect(null, {createStream})(StreamCreate);
-
-
 import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { connect } from "react-redux";
 import { createStream } from "../../actions/stream";
+import { fetchStream } from '../../actions/stream';
+import bcrypt from 'bcryptjs'
 
 const required = (value) => {
   if (!value) {
@@ -40,26 +18,6 @@ const required = (value) => {
 };
 
 
-// const vusername = (value) => {
-//   if (value.length < 3 || value.length > 20) {
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         The username must be between 3 and 20 characters.
-//       </div>
-//     );
-//   }
-// };
-
-// const vpassword = (value) => {
-//   if (value.length < 6 || value.length > 40) {
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         The password must be between 6 and 40 characters.
-//       </div>
-//     );
-//   }
-// };
-
 class StreamCreate extends Component {
   constructor(props) {
     super(props);
@@ -68,16 +26,25 @@ class StreamCreate extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     
     this.state = {
+      businessId:this.props.user.businessId,
       title : '',
       description: '',
+      token:'12345',
       successful:false
     };
   }
 
+
+
   onChangeTitle(e) {
+  
     this.setState({
       title: e.target.value,
     });
+    const token = Math.floor(Math.random()*10000)+Math.random().toString(36).slice(2, 7);
+    this.setState({
+      token: token,
+    })
   }
 
   onChangeDescription(e) {
@@ -93,24 +60,29 @@ class StreamCreate extends Component {
     this.setState({
       successful: false,
     });
+  
 
     this.form.validateAll();
 
     const { dispatch, history } = this.props;
 
+
+    var stream = {
+      title: this.state.title,
+      description: this.state.description,
+      token:this.state.token
+    };
+
     if (this.checkBtn.context._errors.length === 0) {
       this.props
         .dispatch(
-          createStream(
-              this.state.title,
-              this.state.description
-          )
+          createStream(this.state.businessId,stream)
         )
         .then(() => {
           this.setState({
             successful: true,
           });
-          history.push("/");
+          history.push({pathname:"/streams/start",state:{token:this.state.token}});
           window.location.reload();
         })
         .catch(() => {
@@ -195,10 +167,12 @@ class StreamCreate extends Component {
 
 function mapStateToProps(state) {
   const { isLoggedIn } = state.myAuth;
+  const {user} = state.myAuth;
   const { message } = state.message;
   return {
     isLoggedIn,
-    message
+    user,
+    message,
   };
 }
 

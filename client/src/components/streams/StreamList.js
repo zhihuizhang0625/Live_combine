@@ -2,11 +2,35 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchStreams } from '../../actions/stream'
+import {clearMessage } from '../../actions/message'
+import history  from '../../history';
 
 class StreamList extends React.Component{
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          createLive: false,
+          currentUser: undefined,
+        };
+    
+      }
+
+
+
     componentDidMount(){
+        const user = this.props.user;
+    
+        if (user) {
+          this.setState({
+            currentUser: user,
+            createLive: user.roles.includes("ROLE_BUSINESS"),
+          });
+        }
         this.props.fetchStreams()
     }
+
+
     // renderAdmin(stream) {
     //     if(stream.userId === this.props.currentUserId) {
     //         return (
@@ -37,7 +61,7 @@ class StreamList extends React.Component{
         })
     }
     renderCreate() {
-        if(this.props.isLoggedIn){
+        if(this.props.isLoggedIn && this.state.createLive){
             return(
                 <div style={{ textAlign: 'right'}}>
                     <Link to="/streams/new" className="ui button primary">
@@ -60,7 +84,7 @@ class StreamList extends React.Component{
 const mapStateToProps=(state) =>{
     return {
         streams: Object.values(state.streams),
-        currentUser: state.myAuth.user,
+        user: state.myAuth.user,
         isLoggedIn: state.myAuth.isLoggedIn
     }
 }

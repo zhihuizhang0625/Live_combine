@@ -54,8 +54,6 @@ class BusinessRegister extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeFirstName = this.onChangeFirstName.bind(this);
-    this.onChangeLastName = this.onChangeLastName.bind(this);
     this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
     this.onChangeBusinessWebsite = this.onChangeBusinessWebsite.bind(this);
     this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
@@ -64,8 +62,6 @@ class BusinessRegister extends Component {
       username: "",
       email: "",
       password: "",
-      firstName:"",
-      lastName:"",
       businessName:"",
       businessWebsite:"",
       phoneNumber:"",
@@ -91,17 +87,6 @@ class BusinessRegister extends Component {
     });
   }
 
-  onChangeFirstName(e) {
-    this.setState({
-      firstName: e.target.value,
-    });
-  }
-
-  onChangeLastName(e) {
-    this.setState({
-      lastName: e.target.value,
-    });
-  }
 
   
   onChangeBusinessName(e) {
@@ -141,8 +126,6 @@ class BusinessRegister extends Component {
           businessRegister(this.state.username, 
             this.state.email, 
             this.state.password,
-            this.state.firstName,
-            this.state.lastName,
             this.state.businessName,
             this.state.businessWebsite,
             this.state.phoneNumber)
@@ -218,29 +201,6 @@ class BusinessRegister extends Component {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="firstName">First Name</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="firstName"
-                    value={this.state.firstName}
-                    onChange={this.onChangeFirstName}
-                    validations={[required]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="lastName">Last Name</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="lastName"
-                    value={this.state.lastName}
-                    onChange={this.onChangeLastName}
-                    validations={[required]}
-                  />
-                </div>
 
                 <div className="form-group">
                   <label htmlFor="businessName">Company </label>

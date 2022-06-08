@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import GoogleAuth from './GoogleAuth';
 import UserAuth from './auth/UserAuth';
 
+
 const Header = () => {
     return(
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -29,7 +30,7 @@ const Header = () => {
           <a class="nav-link" href="#">User Profile</a>
         </li>
       </ul>
-      <GoogleAuth />
+      {/* <GoogleAuth /> */}
       <UserAuth/>
     </div>
   </div>

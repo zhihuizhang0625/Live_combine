@@ -260,7 +260,7 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
-  const { isLoggedIn } = state.auth;
+  const { isLoggedIn } = state.myAuth;
   const { message } = state.message;
   return {
     isLoggedIn,

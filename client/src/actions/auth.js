@@ -46,8 +46,8 @@ import {
   };
   
 
-  export const businessRegister = (username, email, password,firstname, lastname,businessName,businessWebsite,phoneNumber) => (dispatch) => {
-    return AuthApi.businessRegister(username, email, password,firstname, lastname,businessName,businessWebsite,phoneNumber).then(
+  export const businessRegister = (username, email, password,businessName,businessWebsite,phoneNumber) => (dispatch) => {
+    return AuthApi.businessRegister(username, email, password,businessName,businessWebsite,phoneNumber).then(
       (data) => {
         dispatch({
           type: REGISTER_SUCCESS,

@@ -36,13 +36,11 @@ class AuthApi {
     });
   }
 
-  businessRegister(username, email, password,firstname, lastname,businessName,businessWebsite,phoneNumber) {
+  businessRegister(username, email, password,businessName,businessWebsite,phoneNumber) {
     return axios.post(API_URL + "business/signup", {
       username,
       email,
       password,
-      firstname,
-      lastname,
       businessName,
       businessWebsite,
       phoneNumber
