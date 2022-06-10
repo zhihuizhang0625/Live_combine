@@ -25,7 +25,7 @@ const App =() =>{
                 <Route path="/register" exact component={Register}></Route>
                 <Route path="/business/register" exact component={BusinessRegister}></Route>
                 <Route path="/streams/new" exact component={StreamCreate}></Route>
-                <Route path="/streams/start" exact component={StreamStart}></Route>
+                <Route path="/streams/start/:businessId" exact component={StreamStart}></Route>
                 {/* <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
                 <Route path="/streams/delete/:id" exact component={StreamDelete}></Route> */}
                 <Route path="/streams/:id" exact component={StreamShow}></Route>

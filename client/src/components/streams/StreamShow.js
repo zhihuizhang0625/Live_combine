@@ -34,6 +34,10 @@ class StreamShow extends React.Component{
 
 
     }
+
+    renderInfo(){
+        
+    }
     render() {
         if(!this.props.stream){
             return <div>Loading</div>
@@ -48,6 +52,9 @@ class StreamShow extends React.Component{
     }
 }
 const mapStateToProps= (state, ownProps) => {
-    return { stream: state.streams[ownProps.match.params.id]}
+    return { 
+        user: state.myAuth.user,
+        stream: state.streams[ownProps.match.params.id]
+    }
 }
 export default connect(mapStateToProps, {fetchStream})(StreamShow);

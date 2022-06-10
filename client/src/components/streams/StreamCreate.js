@@ -82,7 +82,7 @@ class StreamCreate extends Component {
           this.setState({
             successful: true,
           });
-          history.push({pathname:"/streams/start",state:{token:this.state.token}});
+          history.push({pathname:`/streams/start/${this.state.businessId}`,state:{token:this.state.token}});
           window.location.reload();
         })
         .catch(() => {
@@ -104,7 +104,6 @@ class StreamCreate extends Component {
             alt="profile-img"
             className="profile-img-card"
           /> */}
-
           <Form
             onSubmit={this.handleCreateStream}
             ref={(c) => {

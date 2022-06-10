@@ -4,6 +4,10 @@ export const getAllStreams = () => {
     return header.get("/stream/all");
   };
 
+  export const getStreamsByBusinessId = (businessId) => {
+    return header.get(`/stream/business/${businessId}`);
+  };
+
 export const getStream = (id) => {
     return header.get(`/stream/${id}`);
   };
