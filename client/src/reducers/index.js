@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form'
-import authReducer from './authReducer';
+import googleAuthReducer from './googleAuthReducer'
+import authReducer from './authReducer'
 import streamReducer from'./streamReducer'
+import messageReducer from './messageReducer';
 
 export default combineReducers({
-    auth:authReducer,
+    auth:googleAuthReducer,
+    myAuth : authReducer,
+    message: messageReducer,
     form : formReducer,
     streams: streamReducer
 })
