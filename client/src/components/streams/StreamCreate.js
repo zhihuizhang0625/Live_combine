@@ -24,12 +24,15 @@ class StreamCreate extends Component {
     this.handleCreateStream = this.handleCreateStream.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeTag = this.onChangeTag.bind(this);
     
     this.state = {
       businessId:this.props.user.businessId,
       title : '',
       description: '',
       token:'12345',
+      tag:[],
+      checked:false,
       successful:false
     };
   }
@@ -53,6 +56,14 @@ class StreamCreate extends Component {
     });
   }
 
+  onChangeTag(e) {
+   this.setState({
+    tag: [...this.state.tag,e.target.value]
+   })
+   
+   console.log(this.state.tag)
+  }
+
 
   handleCreateStream(e) {
     e.preventDefault();
@@ -70,7 +81,8 @@ class StreamCreate extends Component {
     var stream = {
       title: this.state.title,
       description: this.state.description,
-      token:this.state.token
+      token:this.state.token,
+      tag:this.state.tag
     };
 
     if (this.checkBtn.context._errors.length === 0) {
@@ -136,7 +148,23 @@ class StreamCreate extends Component {
                   />
                 </div>
 
-               
+                <div>
+                  <input id="box1" onChange={this.onChangeTag} type="checkbox" value="cloth"/>
+                  <label htmlFor="#box1">cloth</label>
+                </div>
+                <div>
+                  <input id="box2" onChange={this.onChangeTag} type="checkbox" value="food"/>
+                 <label htmlFor="#box2">food</label>
+                </div>
+                <div>
+                  <input id="box3" onChange={this.onChangeTag} type="checkbox" value="makeup"/>
+                 <label htmlFor="#box3">makeup</label>
+                </div>
+                <div>
+                   <input id="box4" onChange={this.onChangeTag} type="checkbox" value="skincare"/>
+                   <label htmlFor="#box4">skincare</label>
+                </div>
+
 
                 <div className="form-group">
                   <button className="btn btn-primary btn-block">Create</button>

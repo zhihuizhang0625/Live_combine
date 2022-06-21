@@ -35,7 +35,6 @@ class StreamStart extends React.Component{
 
 
     render() {
-        console.log(this.state.currentStream)
         return(
           <div>
               <h5>server</h5>

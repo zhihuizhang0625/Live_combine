@@ -16,6 +16,10 @@ export const getStream = (id) => {
     return header.get(`/stream/${token}`);
   };
 
+  export const getStreamsByTag= (tag) =>{
+    return header.get(`/stream/tag/${tag}`)
+  }
+
 
   export const createNewStream = (businessId,stream) => {
     return header.post(`/stream/newstream/${businessId}`,stream);

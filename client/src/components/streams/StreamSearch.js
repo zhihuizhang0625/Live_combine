@@ -1,37 +1,37 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchStreams } from '../../actions/stream'
+import { fetchStreamsByTag } from '../../actions/stream';
 import {clearMessage } from '../../actions/message'
 import history  from '../../history';
 
-class StreamList extends React.Component{
+class StreamSearch extends React.Component{
     constructor(props) {
         super(props);
     
         this.state = {
           createLive: false,
           currentUser: undefined,
-          tag: ''
+          render:false
         };
-
-        this.onChangeTag = this.onChangeTag.bind(this)
-        this.handleSearch = this.handleSearch.bind(this)
     
       }
 
 
 
     componentDidMount(){
+        this.props.fetchStreamsByTag(this.props.match.params.tag)
         const user = this.props.user;
-    
         if (user) {
           this.setState({
             currentUser: user,
             createLive: user.roles.includes("ROLE_BUSINESS"),
           });
-        }
-        this.props.fetchStreams()
+        } 
+
+        setTimeout(function() { //Start the timer
+            this.setState({render: true}) //After 1 second, set render to true
+        }.bind(this), 1000)
     }
 
 
@@ -48,28 +48,9 @@ class StreamList extends React.Component{
     //     }
     // }
 
-
-    onChangeTag(e){
-        e.preventDefault();
-        this.setState({
-            tag: e.target.value
-        })
-
-    }
-
-  
-
-    handleSearch(e){
-        e.preventDefault();
-        history.push(`/streams/search/${this.state.tag}`)
-        window.location.reload();
-    }
-
-   
-
     renderList() {
-        
-        return this.props.streams.map(stream => {
+        if(this.state.render){
+         return this.props.streams.map(stream => {
             return (
                 <div className="item" key={stream.id}>
                     {/* {this.renderAdmin(stream)} */}
@@ -83,6 +64,9 @@ class StreamList extends React.Component{
                 </div>
             )
         })
+     }else{
+        return(<div></div>)
+     }
     }
     renderCreate() {
         if(this.props.isLoggedIn && this.state.createLive){
@@ -97,25 +81,11 @@ class StreamList extends React.Component{
     }
 
 
-
-    renderSearch(){
-        return(
-        <div>
-            <form onSubmit={this.handleSearch}>
-                <input onChange={this.onChangeTag}/>
-                <button type='submit'>search</button>
-            </form>
-        </div>
-        )
-    }
     render() {
         return (
         <div>
             <h2>Live Rooms</h2>
-            {this.renderSearch()}
-            <div className="ui celled list">
-                {this.renderList()}
-            </div>
+            <div className="ui celled list">{this.renderList()}</div>
             {this.renderCreate()}
         </div>
         )
@@ -128,4 +98,4 @@ const mapStateToProps=(state) =>{
         isLoggedIn: state.myAuth.isLoggedIn
     }
 }
-export default connect(mapStateToProps, {fetchStreams}) (StreamList);
+export default connect(mapStateToProps, {fetchStreamsByTag}) (StreamSearch);
