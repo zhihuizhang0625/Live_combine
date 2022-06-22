@@ -12,6 +12,8 @@ import 'bootswatch/dist/darkly/bootstrap.min.css'
 import Signin from './auth/Signin';
 import Register from './auth/Register';
 import BusinessRegister from './auth/BusinessRegister';
+import WebRTC from './streams/WebRTC';
+import WebRTCRoom from './streams/WebRTCRoom';
 
 const App =() =>{
     return (
@@ -29,6 +31,9 @@ const App =() =>{
                 {/* <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
                 <Route path="/streams/delete/:id" exact component={StreamDelete}></Route> */}
                 <Route path="/streams/:id" exact component={StreamShow}></Route>
+                {/* webrtc */}
+                <Route path="/webrtc" exact component={WebRTC}></Route>
+                <Route path="/webrtc/:id" eact component={WebRTCRoom}></Route>
                 </Switch>
              </div>
             </Router>

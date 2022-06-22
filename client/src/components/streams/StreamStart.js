@@ -25,7 +25,7 @@ class StreamStart extends React.Component{
 
     handleCurrentStream() {
          return this.props.streams.map(stream => {
-            if(stream.token == this.state.token){
+            if(stream.token === this.state.token){
                return(<Link to={`/streams/${stream.id}`} className="header">
                     start live
                </Link>)

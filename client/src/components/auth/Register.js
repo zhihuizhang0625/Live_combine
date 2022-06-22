@@ -238,7 +238,6 @@ class Register extends Component {
                 </div>
               </div>
             )}
-
             {message && (
               <div className="form-group">
                 <div className={ this.state.successful ? "alert alert-success" : "alert alert-danger" } role="alert">

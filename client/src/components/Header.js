@@ -29,6 +29,10 @@ const Header = () => {
         <li class="nav-item">
           <a class="nav-link" href="#">User Profile</a>
         </li>
+        {/* webrtc part */}
+        <li class="nav-item">
+          <a class="nav-link" href="/webrtc/">WebRTC function</a>
+        </li>
       </ul>
       {/* <GoogleAuth /> */}
       <UserAuth/>
