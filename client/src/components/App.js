@@ -5,7 +5,7 @@ import StreamCreate from './streams/StreamCreate'
 import StreamBusinessShow from './streams/StreamBusinessShow';
 import StreamList from './streams/StreamList'
 import StreamStart from './streams/StreamStart';
-import StreamSearch from './streams/StreamSearch';
+import StreamTag from './streams/StreamTag';
 // import StreamDelete from './streams/StreamDelete'
 // import StreamEdit from './streams/streamEdit'
 import history from '../history'
@@ -13,6 +13,7 @@ import 'bootswatch/dist/darkly/bootstrap.min.css'
 import Signin from './auth/Signin';
 import Register from './auth/Register';
 import BusinessRegister from './auth/BusinessRegister';
+import StreamSearch from './streams/StreamSearch';
 
 const App =() =>{
     return (
@@ -30,7 +31,8 @@ const App =() =>{
                 {/* <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
                 <Route path="/streams/delete/:id" exact component={StreamDelete}></Route> */}
                 <Route path="/streams/business/:id" exact component={StreamBusinessShow}></Route>
-                <Route path="/streams/search/:tag" exact component={StreamSearch}></Route>
+                <Route path="/streams/search/:tag" exact component={StreamTag}></Route>
+                <Route path="/streams/search/title/:title" exact component={StreamSearch}></Route>
                 </Switch>
              </div>
             </Router>

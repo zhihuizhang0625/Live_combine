@@ -30,6 +30,11 @@ export const fetchStreamsByTag =(tag) => async dispatch =>{
     dispatch({ type:FETCH_STREAMS, payload: response.data })
 }
 
+export const fetchStreamsByTitle =(title) => async dispatch =>{
+    const response = await streamsApi.getStreamsByTitle(title);
+    dispatch({ type:FETCH_STREAMS, payload: response.data })
+}
+
 export const fetchStream= (id) => async dispatch => {
     const response = await streamsApi.getStream(id)
     dispatch({ type:FETCH_STREAM, payload: response.data})

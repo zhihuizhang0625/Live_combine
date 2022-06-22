@@ -20,6 +20,10 @@ export const getStream = (id) => {
     return header.get(`/stream/tag/${tag}`)
   }
 
+  export const getStreamsByTitle= (title) =>{
+    return header.get(`/stream/title/${title}`)
+  }
+
 
   export const createNewStream = (businessId,stream) => {
     return header.post(`/stream/newstream/${businessId}`,stream);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchStreamsByTag } from '../../actions/stream';
+import { fetchStreamsByTitle } from '../../actions/stream';
 import {clearMessage } from '../../actions/message'
 import history  from '../../history';
 
@@ -20,7 +20,7 @@ class StreamSearch extends React.Component{
 
 
     componentDidMount(){
-        this.props.fetchStreamsByTag(this.props.match.params.tag)
+        this.props.fetchStreamsByTitle(this.props.match.params.title)
         const user = this.props.user;
         if (user) {
           this.setState({
@@ -98,4 +98,4 @@ const mapStateToProps=(state) =>{
         isLoggedIn: state.myAuth.isLoggedIn
     }
 }
-export default connect(mapStateToProps, {fetchStreamsByTag}) (StreamSearch);
+export default connect(mapStateToProps, {fetchStreamsByTitle}) (StreamSearch);
