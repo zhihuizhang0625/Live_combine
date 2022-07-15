@@ -9,6 +9,7 @@ import { RouteComponentProps } from "react-router-dom";
 import bcrypt from 'bcryptjs'
 import { Peer } from "peerjs";
 import { io } from "socket.io-client";
+import { add, isFunction } from "lodash";
 /* webrtc dependency */
 const { v4: uuidV4} = require('uuid');
 // const io = require('socket.io-client');
@@ -37,11 +38,21 @@ class WebRTCRoom extends Component {
         };
     }
 
+    defaultProps
+
     componentDidMount() {
-        // const script1 = document.createElement("script");
-        // script1.src = "https://unpkg.com/peerjs@1.4.5/dist/peerjs.min.js";
-        // script1.defer = true;
-        // const socket = io('127.0.0.1:3060');
+        
+        // specify streamer or viewer. 
+        let streamer = false;
+        if (this.props.location.state !== undefined) {
+            streamer = true;
+        }
+        console.log("streamer view: " + streamer)
+
+        // if ('state' in this.props.location) {
+        //     streamer = true;
+        // }
+        
         const socket = io('localhost:3060');
         const videoGrid = document.getElementById('video-grid')
         // const myPeer = new Peer(undefined, {
@@ -59,44 +70,65 @@ class WebRTCRoom extends Component {
             video: true,
             audio: true
         }).then(stream => {
-            addVideoStream(myVideo, stream)
+            if (streamer) {
+                addVideoStream(myVideo, stream)
+                socket.on('user-connected', userId => {
+                    console.log("new user coming: " + userId)
+                    connectToNewUser(userId, stream)
+                })
+            }
+            // addVideoStream(myVideo, stream)
 
-            // support multi-user
+            // support multi-user, userd for replying to others' call.
+            // myPeer.on('call', call => {
+            //     // call.answer(stream)
+            //     const video = document.createElement('video')
+            //     call.on('stream', userVideoStream => {
+            //         addVideoStream(video, userVideoStream)
+            //         // incomingStreams = true;
+            //     })
+            // })
+
+            // everytime a user comes in, call each user in this room.
+            // socket.on('user-connected', userId => {
+            //     console.log("new user coming: " + userId)
+            //     connectToNewUser(userId, stream)
+            // })
+
+        })
+        
+        if (!streamer) {
             myPeer.on('call', call => {
-                call.answer(stream)
-                const video = document.createElement('video')
+                call.answer()
+                console.log("I'm answering. And waiting for incoming stream")
+                // const video = document.createElement('video')
                 call.on('stream', userVideoStream => {
-                    addVideoStream(video, userVideoStream)
+                    addVideoStream(myVideo, userVideoStream)
+                    // incomingStreams = true;
                 })
             })
+        }
 
-            socket.on('user-connected', userId => {
-                connectToNewUser(userId, stream)
-            })
-
-        })
-
-        socket.on('user-disconnected', userId => {
-            if (peers[userId]) peers[userId].close()
-        })
+        // socket.on('user-disconnected', userId => {
+        //     if (peers[userId]) peers[userId].close()
+        // })
 
         myPeer.on('open', id => {
             socket.emit('join-room', this.state.room_id, id)
         })
 
-        socket.on('user-connected', userId => {
-            console.log('User connected: ' + userId)
-        })
-
+        // for multi-user, used for calling others.
         function connectToNewUser(userId, stream) {
+            console.log("calling new user.")
             const call = myPeer.call(userId, stream)
-            const video = document.createElement('video')
-            call.on('stream', userVideoStream => {
-                addVideoStream(video, userVideoStream)
-            })
-            call.on('close', () => {
-                video.remove()
-            })
+
+            // const video = document.createElement('video')
+            // call.on('stream', userVideoStream => {
+            //     addVideoStream(video, userVideoStream)
+            // })
+            // call.on('close', () => {
+            //     video.remove()
+            // })
 
             peers[userId] = call
         }

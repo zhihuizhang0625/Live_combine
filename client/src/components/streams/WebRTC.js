@@ -35,6 +35,8 @@ class WebRTC extends Component {
         token:'12345',
         successful:false
         };
+
+        this.props.history.push()
     }
 
     
@@ -43,7 +45,7 @@ class WebRTC extends Component {
 
         return (
             <h1>
-                <Link to={`/webrtc/${uuidv4()}`} >Start WebRTC</Link>
+                <Link to={{pathname:`/webrtc/${uuidv4()}`, state:{streamer:true}}} >Start WebRTC</Link>
             </h1>
         )
     }

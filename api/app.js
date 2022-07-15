@@ -13,6 +13,9 @@ var app = express();
 // cors
 var cors = require("cors");
 
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +25,7 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser()); 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -43,5 +46,16 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+io.on('connection', socket => {
+  socket.on('join-room', (roomId, userId) => {
+      socket.join(roomId)
+      socket.broadcast.to(roomId).emit('user-connected', userId)
+
+      socket.on('disconnect', () => {
+          socket.broadcast.to(roomId).emit('user-disconnected', userId)
+      })
+  })
+})
 
 module.exports = app;
