@@ -42,34 +42,30 @@ class WebRTCRoom extends Component {
 
     componentDidMount() {
         
+        // main part of webrtc
+
         // specify streamer or viewer. 
         let streamer = false;
         if (this.props.location.state !== undefined) {
             streamer = true;
         }
         console.log("streamer view: " + streamer)
-
-        // if ('state' in this.props.location) {
-        //     streamer = true;
-        // }
         
+        // config
         const socket = io('localhost:3060');
         const videoGrid = document.getElementById('video-grid')
-        // const myPeer = new Peer(undefined, {
-        //     host: '/',
-        //     port: '3016'
-        // })
-        // if you don't want to start your peerserver, could just use the default
         const myPeer = new Peer()
 
         const myVideo = document.createElement('video')
         myVideo.muted = true
         const peers = {}
 
+        // try to get video input of the browser
         navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true
         }).then(stream => {
+            // if streamer allowed, then add the video stream and start a listener
             if (streamer) {
                 addVideoStream(myVideo, stream)
                 socket.on('user-connected', userId => {
@@ -97,14 +93,13 @@ class WebRTCRoom extends Component {
 
         })
         
+        // if this is a viewer, answer the peerjs call from streamer and add the incoming stream here.
         if (!streamer) {
             myPeer.on('call', call => {
                 call.answer()
                 console.log("I'm answering. And waiting for incoming stream")
-                // const video = document.createElement('video')
                 call.on('stream', userVideoStream => {
                     addVideoStream(myVideo, userVideoStream)
-                    // incomingStreams = true;
                 })
             })
         }
@@ -113,11 +108,12 @@ class WebRTCRoom extends Component {
         //     if (peers[userId]) peers[userId].close()
         // })
 
+        // join the same room of socket.io
         myPeer.on('open', id => {
             socket.emit('join-room', this.state.room_id, id)
         })
 
-        // for multi-user, used for calling others.
+        // when a new user comes, streamer will use this to peerjs call the new user.
         function connectToNewUser(userId, stream) {
             console.log("calling new user.")
             const call = myPeer.call(userId, stream)
@@ -130,9 +126,11 @@ class WebRTCRoom extends Component {
             //     video.remove()
             // })
 
+            // useless
             peers[userId] = call
         }
 
+        // add the video stream to the video part.
         function addVideoStream(video, stream) {
             video.srcObject = stream
             video.addEventListener('loadedmetadata', () => {

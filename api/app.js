@@ -47,6 +47,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// socket.io for webrtc
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
       socket.join(roomId)
